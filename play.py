@@ -172,7 +172,7 @@ def play_aidungeon_2():
         + "ability to save games."
     )
 
-    upload_story = True
+    upload_story = False
 
     print("\nInitializing AI Dungeon! (This might take a few minutes)\n")
     generator = GPT2Generator()
@@ -226,6 +226,7 @@ def play_aidungeon_2():
                 print("\nLoading Game...\n")
                 console_print(result)
 
+        story_manager.story.upload_story = False
         while True:
             sys.stdin.flush()
             action = input("> ").strip()
@@ -329,6 +330,8 @@ def play_aidungeon_2():
                 elif action[0] == '"':
                     action = "You say " + action
 
+                elif action[0] == '!':
+                    action = "\\n" + action[1:].replace("\\\\n", "\\n") + "\\n"
                 else:
                     action = action.strip()
 
