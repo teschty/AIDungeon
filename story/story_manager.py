@@ -119,16 +119,16 @@ class Story:
         f.close()
 
         FNULL = open(os.devnull, "w")
-        p = Popen(
-            [
-                "gsutil",
-                "cp",
-                os.path.join(save_path, file_name),
-                "gs://aidungeonstories",
-            ],
-            stdout=FNULL,
-            stderr=subprocess.STDOUT,
-        )
+        # p = Popen(
+        #     [
+        #         "gsutil",
+        #         "cp",
+        #         os.path.join(save_path, file_name),
+        #         "gs://aidungeonstories",
+        #     ],
+        #     stdout=FNULL,
+        #     stderr=subprocess.STDOUT,
+        # )
         return self.uuid
 
     def load_from_storage(self, story_id):
