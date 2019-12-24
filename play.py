@@ -13,6 +13,9 @@ os.environ["TF_CPP_MIN_LOG_LEVEL"] = "3"
 
 
 def splash():
+    if len(sys.argv) > 1 and sys.argv[1] == "new":
+        return "new"
+    
     print("0) New Game\n1) Load Game\n")
     choice = get_num_options(2)
 
@@ -52,6 +55,10 @@ def select_game():
     with open(YAML_FILE, "r") as stream:
         data = yaml.safe_load(stream)
 
+    arg_choice = None
+    if len(sys.argv) > 2:
+        arg_choice = int(sys.argv[2])
+
     # Random story?
     print("Random story?")
     console_print("0) yes")
@@ -61,17 +68,20 @@ def select_game():
     if choice == 0:
         return random_story(data)
 
-    # User-selected story...
-    print("\n\nPick a setting.")
     settings = data["settings"].keys()
-    for i, setting in enumerate(settings):
-        print_str = str(i) + ") " + setting
-        if setting == "fantasy":
-            print_str += " (recommended)"
+    if arg_choice == None:
+        # User-selected story...
+        print("\n\nPick a setting.")
+        for i, setting in enumerate(settings):
+            print_str = str(i) + ") " + setting
+            if setting == "fantasy":
+                print_str += " (recommended)"
 
-        console_print(print_str)
-    console_print(str(len(settings)) + ") custom")
-    choice = get_num_options(len(settings) + 1)
+            console_print(print_str)
+        console_print(str(len(settings)) + ") custom")
+        choice = get_num_options(len(settings) + 1)
+    else:
+        choice = arg_choice
 
     if choice == len(settings):
         return "custom", None, None, None, None
