@@ -21,6 +21,10 @@ class GPT2Generator:
         if "TOP_K" in os.environ:
             top_k = int(os.environ["TOP_K"])
 
+        if "VERBOSE" in os.environ:
+            print(f"<temperature = {temperature}>")
+            print(f"<top_k = {top_k}>")
+
         self.generate_num = generate_num
         self.temp = temperature
         self.top_k = top_k
